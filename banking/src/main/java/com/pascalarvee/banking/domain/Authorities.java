@@ -3,6 +3,7 @@
  */
 package com.pascalarvee.banking.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,14 +18,19 @@ public class Authorities {
 	
 	@Id
 	@GeneratedValue
-	private String authoritiesId;
+	@Column(name="AUTHORITIES_ID")
+	private Integer authoritiesId;
+	
+	@Column
 	private String username;
+	
+	@Column
 	private String authority;
 	
-	public String getAuthoritiesId() {
+	public Integer getAuthoritiesId() {
 		return authoritiesId;
 	}
-	public void setAuthoritiesId(String authoritiesId) {
+	public void setAuthoritiesId(Integer authoritiesId) {
 		this.authoritiesId = authoritiesId;
 	}
 	public String getUsername() {
@@ -39,8 +45,4 @@ public class Authorities {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	
-	
-	
-
 }

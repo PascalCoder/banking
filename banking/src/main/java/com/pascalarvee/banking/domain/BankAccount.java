@@ -6,11 +6,9 @@ package com.pascalarvee.banking.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -42,21 +40,34 @@ public class BankAccount implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private String accountId;
+	@Column(name="ACCOUNT_ID") /*Should use Integer instead of String for postgres database*/
+	private Integer accountId;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@Column(name="DATE_OPENED")
 	private java.time.LocalDateTime dateOpened;
 	
+	@Column(name="ACCOUNT_NBR")
 	private String accountNumber;
+	
+	@Column(name="ROUTING_NBR")
 	private String routingNumber;
+	
+	//@Column(name="ACCOUNT_TYPE")
 	private static String accountType;
+	
+	//@Column(name="INTEREST_RATE")
 	private static double interestRate;
+	
+	@Column(name="ACCT_DESCRIPTION")
 	private String accountDescription;
 
 	@ManyToOne
-	@JoinColumn(name = "userId")
-	private User user;
+	@JoinColumn(name = "CLIENT_ID")
+	//@Column(name="USER_ID")
+	private Client client;
 
+	@Column
 	private BigDecimal balance;
 	
 	//@ElementCollection
@@ -68,11 +79,11 @@ public class BankAccount implements Serializable {
 		
 	}*/
 
-	public String getAccountId() {
+	public Integer getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(String accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 
@@ -109,8 +120,8 @@ public class BankAccount implements Serializable {
 	 * accountType; }
 	 */
 
-	public User getUser() {
-		return user;
+	public Client getClient() {
+		return client;
 	}
 
 	public double getInterestRate() {
@@ -122,8 +133,8 @@ public class BankAccount implements Serializable {
 	 * interestRate; }
 	 */
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	public BigDecimal getBalance() {

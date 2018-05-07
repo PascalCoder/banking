@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pascalarvee.banking.domain.User;
-import com.pascalarvee.banking.service.UserService;
+import com.pascalarvee.banking.domain.Client;
+import com.pascalarvee.banking.service.ClientService;
 
 /**
  * @author PASCAL
@@ -21,13 +21,13 @@ import com.pascalarvee.banking.service.UserService;
 public class ProfileController { /**User will be able to view and update his/her profile*/
 	
 	@Autowired
-	private UserService userService;
+	private ClientService clientService;
 	
 	@RequestMapping("/viewProfile/{userId}")
 	public String viewProfile(@PathVariable("userId")String userId, Model model){
 		
-		User user = userService.getUserByID(userId);
-		model.addAttribute("user", user);
+		Client client = clientService.getClientByID(Integer.valueOf(userId));
+		model.addAttribute("user", client);
 		
 		return "profile";
 	}

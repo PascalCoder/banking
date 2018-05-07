@@ -3,7 +3,6 @@ package com.pascalarvee.banking.dao.impl;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,10 +12,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pascalarvee.banking.dao.BankAccountDAO;
-import com.pascalarvee.banking.dao.UserDAO;
+import com.pascalarvee.banking.dao.ClientDAO;
 import com.pascalarvee.banking.domain.BankAccount;
 import com.pascalarvee.banking.domain.Transaction;
-import com.pascalarvee.banking.domain.User;
+import com.pascalarvee.banking.domain.Client;
 
 @Repository
 @Transactional
@@ -26,10 +25,10 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 	private SessionFactory sessionFactory;
 	
 	@Autowired
-	private UserDAO userDAO;
+	private ClientDAO clientDAO;
 
 	@Override
-	public void addBankAccount(String userId) {
+	public void addBankAccount(Integer clientId) {
 		// TODO Auto-generated method stub
 
 	}
@@ -41,24 +40,24 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 	}
 
 	@Override
-	public LinkedList<BankAccount> getBankAccountsByUser(String userId) {
+	public LinkedList<BankAccount> getBankAccountsByClient(Integer clientId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addTransactionRecipient(String userId, String accountNumber) {
+	public void addTransactionRecipient(Integer clientId, String accountNumber) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		User sender = userDAO.getUserByID(userId);
+		Client sender = clientDAO.getClientByID(clientId);
 		BankAccount receivingAccount = getBankAccountByAccountNumber(accountNumber);
 		//Transaction transfer = new Transfer();
 		
-		User recipient = receivingAccount.getUser();
+		Client recipient = receivingAccount.getClient();
 		System.out.println("Recipient: " + recipient.getEmail());
 		
-		List<User> recipients = sender.getRecipients();
+		List<Client> recipients = sender.getRecipients();
 		recipients.add(recipient);
 		System.out.println("Recipients: " + new ArrayList<>(recipients).get(0).getEmail());
 		

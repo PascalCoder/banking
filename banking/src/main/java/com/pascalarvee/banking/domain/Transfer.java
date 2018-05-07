@@ -20,10 +20,10 @@ public class Transfer extends Transaction{
 	private static final long serialVersionUID = 5858187836394507236L;
 	
 	@Transient
-	private User sender;
+	private Client sender;
 	
 	@Transient
-	private User receiver;
+	private Client receiver;
 	
 	@Transient
 	private BankAccount sendingAccount;
@@ -31,21 +31,22 @@ public class Transfer extends Transaction{
 	@Transient
 	private BankAccount receivingAccount;
 	
+	//@Column(name="ACCT_TYPE")
 	private static final String ACCOUNT_TYPE = TransactionType.TRANSFER.toString();
 	
-	public User getSender() {
+	public Client getSender() {
 		return sender;
 	}
 	
-	public void setSender(User sender) {
+	public void setSender(Client sender) {
 		this.sender = sender;
 	}
 	
-	public User getReceiver() {
+	public Client getReceiver() {
 		return receiver;
 	}
 	
-	public void setReceiver(User receiver) {
+	public void setReceiver(Client receiver) {
 		this.receiver = receiver;
 	}
 	

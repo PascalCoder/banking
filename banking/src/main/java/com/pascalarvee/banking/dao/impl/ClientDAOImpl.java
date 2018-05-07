@@ -21,13 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pascalarvee.banking.dao.UserDAO;
+import com.pascalarvee.banking.dao.ClientDAO;
 import com.pascalarvee.banking.domain.Address;
 import com.pascalarvee.banking.domain.Authorities;
 import com.pascalarvee.banking.domain.BankAccount;
 import com.pascalarvee.banking.domain.CheckingAccount;
 //import com.pascalarvee.banking.domain.Transaction;
-import com.pascalarvee.banking.domain.User;
+import com.pascalarvee.banking.domain.Client;
 import com.pascalarvee.banking.domain.Users;
 
 /**
@@ -37,7 +37,7 @@ import com.pascalarvee.banking.domain.Users;
 
 @Repository
 @Transactional
-public class UserDAOImpl implements UserDAO {
+public class ClientDAOImpl implements ClientDAO {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -46,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
 	 * @see com.pascalarvee.banking.dao.UserDAO#getUserByCredentials(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public User getUserByCredentials(String username, String password) {
+	public Client getClientByCredentials(String username, String password) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from User where username=? and password=?");
@@ -67,51 +67,52 @@ public class UserDAOImpl implements UserDAO {
 			}
 		} */
 		
-		User user = (User)query.uniqueResult();
+		Client client = (Client)query.uniqueResult();
 		
-		return user;
+		return client;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.pascalarvee.banking.dao.UserDAO#getUserByID(java.lang.String)
 	 */
 	@Override
-	public User getUserByID(String userId) {
+	public Client getClientByID(Integer userId) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		User user = (User)session.get(User.class, userId);
+		Client client = (Client)session.get(Client.class, userId);
 		session.flush();
 		
-		if(user == null){
-			List<User> users = getAllUsers();
+		if(client == null){
+			List<Client> clients = getAllClients();
 		
-			for(User u : users){
-				if(u.getUserId().equals(userId)){
-					user = u;
+			for(Client u : clients){
+				if(u.getClientId().equals(userId)){
+					client = u;
 					break;
 				}
 			}
 		}
 		
-		return user;
+		return client;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.pascalarvee.banking.dao.UserDAO#getAllUsers()
 	 */
 	@Override
-	public List<User> getAllUsers() {
+	public List<Client> getAllClients() {
 		
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from User");
 		
 		@SuppressWarnings("unchecked")
-		List<User> users = query.list();
+		List<Client> clients = query.list();
+		//List<User> users1 = query.getQueryString();
 		
 		session.flush();
 		
-		if(users.size() == 0){
-			users = new ArrayList<>();
+		if(clients.size() == 0){
+			clients = new ArrayList<>();
 			/**User 1**/
 			/*User user1 = new User();
 			user1.setUserId("1");
@@ -153,20 +154,20 @@ public class UserDAOImpl implements UserDAO {
 			
 			
 			/**User 2**/
-			User user2 = new User();
-			user2.setUserId("2");
+			Client user2 = new Client();
+			user2.setUserId(99);
 			user2.setFirstName("James");
 			user2.setMiddleName("David");
 			user2.setLastName("Milner");
 			
 			Address add2 = new Address();
-			add2.setAddressId("2");
+			add2.setAddressId(99);
 			add2.setAddressLine1("88 Clough Pike");
 			add2.setAddressLine2("Apt. 1");
 			add2.setCity("Cincinnati");
 			add2.setCountry("United States");
 			add2.setState("Ohio");
-			add2.setUser(user2);
+			//add2.setUser(user2);
 			add2.setZipCode("45245");
 			
 			user2.setAddress(add2);
@@ -178,13 +179,13 @@ public class UserDAOImpl implements UserDAO {
 			user2.setPassword("1234");
 			
 			BankAccount ba2 = new CheckingAccount();
-			ba2.setAccountId("2");
+			ba2.setAccountId(2);
 			ba2.setAccountNumber("2");
 			ba2.setRoutingNumber("2");
 			//ba1.setAccountType("Checking");
 			ba2.setBalance(new BigDecimal("10000"));
 			//ba2.setDateOpened(new LocalDate(2008, 10, 21));
-			ba2.setUser(user2);
+			ba2.setClient(user2);
 			
 			Set<BankAccount> banks2 = new HashSet<>();
 			banks2.add(ba2);
@@ -193,17 +194,17 @@ public class UserDAOImpl implements UserDAO {
 			
 			//List<User> users = new ArrayList<>();
 			//users.add(user1);
-			users.add(user2);
+			clients.add(user2);
 		}
 		
-		return users;
+		return clients;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.pascalarvee.banking.dao.UserDAO#addUser(com.pascalarvee.banking.domain.User)
 	 */
 	@Override
-	public void addUser(User user) {
+	public void addClient(Client client) {
 		Session session = sessionFactory.getCurrentSession();
 		
 		BankAccount bankAccount = new CheckingAccount();
@@ -216,28 +217,28 @@ public class UserDAOImpl implements UserDAO {
 		
 		Set<BankAccount> bankAccounts = new HashSet<>();
 		bankAccounts.add(bankAccount);
-		user.setBankAccounts(new ArrayList<>(bankAccounts));
-		user.getAddress().setUser(user);
+		client.setBankAccounts(new ArrayList<>(bankAccounts));
+		//user.getAddress().setUser(user);
 		
-		session.saveOrUpdate(user);
-		session.saveOrUpdate(user.getAddress());
+		session.saveOrUpdate(client);
+		session.saveOrUpdate(client.getAddress());
 		
 		Users new_user = new Users();
-		new_user.setUsername(user.getUsername());
-		new_user.setPassword(user.getPassword());
+		new_user.setUsername(client.getUsername());
+		new_user.setPassword(client.getPassword());
 		new_user.setEnabled(true);
-		new_user.setUserId(user.getUserId());
+		new_user.setClientId(client.getClientId());
 		
 		Authorities authority = new Authorities();
-		authority.setUsername(user.getUsername());
+		authority.setUsername(client.getUsername());
 		authority.setAuthority("ROLE_USER");
 		
 		session.saveOrUpdate(new_user);
 		session.saveOrUpdate(authority);
 		
-		bankAccount.setUser(user);
+		bankAccount.setClient(client);
 		session.saveOrUpdate(bankAccount);
-		session.saveOrUpdate(user);
+		session.saveOrUpdate(client);
 		
 		session.flush();
 
@@ -247,10 +248,10 @@ public class UserDAOImpl implements UserDAO {
 	 * @see com.pascalarvee.banking.dao.UserDAO#desactivateUser(com.pascalarvee.banking.domain.User)
 	 */
 	@Override
-	public void desactivateUser(String userId) {
+	public void desactivateClient(Integer userId) {
 		Session session = sessionFactory.getCurrentSession();
-		User user = (User)session.get(User.class, userId);
-		user.setEnabled(false);
+		Client client = (Client)session.get(Client.class, userId);
+		client.setEnabled(false);
 		
 		/*Set<BankAccount>bankAccounts = user.getBankAccounts();
 		Set<Transaction>transactions = user.getTransactions();
@@ -278,13 +279,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserByUsername(String username) {
+	public Client getClientByUsername(String username) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from User where username=?");
 		
 		query.setString(0, username);
 				
-		return (User)query.uniqueResult();
+		return (Client)query.uniqueResult();
 	}
 	
 	public static String createAccountNumber() {
@@ -336,42 +337,42 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateUserProfile(User user) {
+	public void updateClientProfile(Client client) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(user);
+		session.saveOrUpdate(client);
 		session.flush();
 		
 	}
 
 	@Override
-	public List<User> getUsersByFirstName(String firstName) {
+	public List<Client> getClientsByFirstName(String firstName) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from User where firstName=?");
 		query.setString(0, firstName);
 		
 		@SuppressWarnings("unchecked")
-		List<User> users = query.list();
+		List<Client> clients = query.list();
 		
 		session.flush();
 		
-		return users;
+		return clients;
 	}
 
 	@Override
-	public List<User> getUsersByLastName(String lastName) {
+	public List<Client> getClientsByLastName(String lastName) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from User where lastName=?");
 		query.setString(0, lastName);
 		
 		@SuppressWarnings("unchecked")
-		List<User> users = query.list();
+		List<Client> clients = query.list();
 		
 		session.flush();
 		
-		return users;
+		return clients;
 	}
 
 }

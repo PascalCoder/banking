@@ -64,6 +64,11 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.196</version>
 		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.1</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -164,6 +169,22 @@
 				<version>3.0.1</version>
 				<executions>
 					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.github.jsimone</groupId>
+									<artifactId>webapp-runner</artifactId>
+									<version>8.5.11.3</version>
+									<destFileName>webapp-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
 						<id>copy-dependencies</id>
 						<phase>package</phase>
 						<goals>
@@ -184,9 +205,7 @@
 					</buildpacks>
 					<appName>pure-earth-20551</appName>
 				</configuration>
-				<!-- <configuration>
-					<jdkVersion>1.8</jdkVersion>
-				</configuration> -->
+				<!-- <configuration> <jdkVersion>1.8</jdkVersion> </configuration> -->
 			</plugin>
 		</plugins>
 	</build>

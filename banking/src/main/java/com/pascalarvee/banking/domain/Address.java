@@ -5,11 +5,10 @@ package com.pascalarvee.banking.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,9 +21,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 
-@Entity
 @JsonIgnoreProperties({"addressId","user"})
 @JsonPropertyOrder({"addressLine1","addressLine2","city","state","country","zipCode"})
+@Entity
 public class Address implements Serializable{
 	
 	/**
@@ -34,34 +33,44 @@ public class Address implements Serializable{
 	
 	@Id
 	@GeneratedValue
-	private String addressId;
+	@Column(name="ADDRESS_ID")
+	private Integer addressId; /** Changed from String to Integer May 5 2018 */
 	
 	@NotEmpty
 	@JsonProperty("address_line1")
+	@Column(name="ADDRESS_LINE1")
 	private String addressLine1;
 	
 	@JsonProperty("address_line2")
+	@Column(name="ADDRESS_LINE2")
 	private String addressLine2;
 	
 	@NotEmpty
+	@Column
 	private String city;
+	
+	@Column
 	private String state;
 	
 	@NotEmpty
+	@Column
 	private String country;
 	
 	@JsonProperty("zip_code")
+	@Column(name="ZIP_CODE")
 	private String zipCode;
 	
-	@OneToOne
+	/** Decided to drop this as it makes deleting a user more difficult. (May 5 2018)*/
+	/*@OneToOne
 	@JoinColumn(name="userId")
-	private User user;
+	@Column(name="USER_ID")    
+	private User user;*/
 
-	public String getAddressId() {
+	public Integer getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(String addressId) {
+	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
 	}
 
@@ -113,13 +122,13 @@ public class Address implements Serializable{
 		this.zipCode = zipCode;
 	}
 
-	public User getUser() {
+	/*public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 
 	@Override
 	public String toString() {

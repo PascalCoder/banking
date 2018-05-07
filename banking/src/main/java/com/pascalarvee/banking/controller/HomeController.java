@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pascalarvee.banking.domain.BankAccount;
-import com.pascalarvee.banking.service.UserService;
+import com.pascalarvee.banking.service.ClientService;
 
 /**
  * @author PASCAL ARVEE
@@ -28,7 +28,7 @@ public class HomeController {
 	///Some comments here!
 	
 	@Autowired
-	private UserService userService;
+	private ClientService clientService;
 	
 	@RequestMapping("/admin")
 	public String showAdminPage(){
@@ -68,12 +68,12 @@ public class HomeController {
 		}
 		
 		
-		com.pascalarvee.banking.domain.User user = userService.getUserByUsername(activeUser.getUsername());
+		com.pascalarvee.banking.domain.Client client = clientService.getClientByUsername(activeUser.getUsername());
 		
 		LinkedList<BankAccount>bankAccounts =  new LinkedList<>();
 		
 		if(!activeUser.getUsername().equalsIgnoreCase("admin")){
-			LinkedList<BankAccount> temp = new LinkedList<>(user.getBankAccounts());
+			LinkedList<BankAccount> temp = new LinkedList<>(client.getBankAccounts());
 			
 			for(BankAccount ba : temp){
 				if(ba.getAccountType().equalsIgnoreCase("Checking")){
@@ -87,7 +87,7 @@ public class HomeController {
 			model.addAttribute("bankAccounts", bankAccounts);
 		}
 		
-		model.addAttribute("user", user);
+		model.addAttribute("user", client);
 		
 		
 		return "default";

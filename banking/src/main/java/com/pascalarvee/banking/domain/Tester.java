@@ -27,11 +27,11 @@ public class Tester {
 	public static void main(String[] args) {
 		BankAccount ba1 = new CheckingAccount();
 		BankAccount ba2 = new SavingsAccount();
-		User user = new User();
-		ba1.setUser(user);
-		ba2.setUser(user);
-		user.setFirstName("Pascal");
-		user.setLastName("Arvee");
+		Client client = new Client();
+		ba1.setClient(client);
+		ba2.setClient(client);
+		client.setFirstName("Pascal");
+		client.setLastName("Arvee");
 		LocalDate date = new LocalDate(1987, 1, 21);
 		//user.setDateOfBirth(Date.valueOf((date).toString()));
 		Set<BankAccount>accounts = new HashSet<>();
@@ -41,10 +41,10 @@ public class Tester {
 		
 		//System.out.println(accounts.get(1).getAccountType());
 		for (BankAccount ba : accounts){
-			System.out.println(ba.getUser().getLastName());
+			System.out.println(ba.getClient().getLastName());
 		}
 		
-		System.out.println(ba1.getUser().getFirstName());
+		System.out.println(ba1.getClient().getFirstName());
 		
 		/*SecureRandom generatedId = new SecureRandom();
 		System.out.println(generatedId.nextInt(99));*/

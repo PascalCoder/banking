@@ -14,9 +14,9 @@ public class BankAccountServiceImpl implements BankAccountService {
 	private BankAccountDAO bankAccountDAO;
 
 	@Override
-	public void addTransactionRecipient(String userId, String accoountNumber) {
+	public void addTransactionRecipient(Integer clientId, String accoountNumber) {
 		
-		bankAccountDAO.addTransactionRecipient(userId, accoountNumber);
+		bankAccountDAO.addTransactionRecipient(clientId, accoountNumber);
 
 	}
 

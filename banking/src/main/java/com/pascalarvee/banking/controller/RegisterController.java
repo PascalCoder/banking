@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pascalarvee.banking.domain.Address;
 import com.pascalarvee.banking.domain.Gender;
-import com.pascalarvee.banking.domain.User;
-import com.pascalarvee.banking.service.UserService;
+import com.pascalarvee.banking.domain.Client;
+import com.pascalarvee.banking.service.ClientService;
 
 /**
  * @author PASCAL
@@ -38,31 +38,32 @@ import com.pascalarvee.banking.service.UserService;
 public class RegisterController {
 	
 	@Autowired
-	private UserService userService;
+	private ClientService clientService;
 	
 	public static final DateTimeZone jodaTzUTC = DateTimeZone.forID("UTC");
 	
 	@RequestMapping("/register")
 	public String register(Model model){
 		
-		User user = new User();
+		Client client = new Client();
 		Address address = new Address();
-		user.setAddress(address);
+		client.setAddress(address);
 		
-		user.setGender(Gender.MALE.toString());
+		client.setGender(Gender.MALE.toString());
 		
-		model.addAttribute("user", user);
+		model.addAttribute("user", client);
 		model.addAttribute("genders", Gender.values());
 		
 		return "registrationPage";
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String registerPost(@Valid @ModelAttribute("user")User user, BindingResult bindingResult, 
+	public String registerPost(@Valid @ModelAttribute("user")Client client, BindingResult bindingResult, 
 								Model model, Errors errors, @RequestParam("dob")String dateOfBirth){
 		
 		System.out.println("*********************************************************************");
 		System.out.println("Date of Birth: " + dateOfBirth);
+		System.out.println("ID: " + client.getClientId());
 		System.out.println("*********************************************************************");
 		//DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
 		//LocalDate date = fmt.parseLocalDate(dateOfBirth);
@@ -76,7 +77,7 @@ public class RegisterController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		user.setDateOfBirth(date);
+		client.setDateOfBirth(date);
 		
 		if(bindingResult.hasErrors()){
 			System.out.println(bindingResult.getErrorCount() + " " + bindingResult.getObjectName() + " " + bindingResult.getModel());
@@ -84,55 +85,55 @@ public class RegisterController {
 			
 			//user.setGender(Gender.MALE.toString());
 			
-			model.addAttribute("user", user);
+			model.addAttribute("user", client);
 			model.addAttribute("genders", Gender.values());
 			
 			return "registrationPage";
 		}
 		
-		if(!(user.getPassword().equals(user.getPasswordConfirm()))){
+		if(!(client.getPassword().equals(client.getPasswordConfirm()))){
 			errors.rejectValue("password", "nomatch.password");
 			//model.addAttribute("passwordError", "The passwords do not match!");
 			
 			//user.setGender(Gender.MALE.toString());
 			
-			model.addAttribute("user", user);
+			model.addAttribute("user", client);
 			model.addAttribute("genders", Gender.values());
 			
 			return "registrationPage";
 		}
 		
-		List<User>users = userService.getAllUsers();
+		List<Client>clients = clientService.getAllClients();
 		
-		for(User u : users){
-			if(u.getEmail().equals(user.getEmail())){
+		for(Client u : clients){
+			if(u.getEmail().equals(client.getEmail())){
 				model.addAttribute("emailMsg", "Email already exists!");
 				System.out.println("There are some issues here (email)!");
 				
-				user.setGender(Gender.MALE.toString());
+				client.setGender(Gender.MALE.toString());
 				
-				model.addAttribute("user", user);
+				model.addAttribute("user", client);
 				model.addAttribute("genders", Gender.values());
 				
 				return "registrationPage";
 			}
-			if(u.getUsername().equals(user.getUsername())){
+			if(u.getUsername().equals(client.getUsername())){
 				model.addAttribute("userMsg", "User already exists!");
 				System.out.println("There are some issues here (username)!");
 				
-				user.setGender(Gender.MALE.toString());
+				client.setGender(Gender.MALE.toString());
 				
-				model.addAttribute("user", user);
+				model.addAttribute("user", client);
 				model.addAttribute("genders", Gender.values());
 				
 				return "registrationPage";
 			}
 		}
 		
-		user.setEnabled(true);
-		userService.addUser(user);
+		client.setEnabled(true);
+		clientService.addClient(client);
 		
-		model.addAttribute("user", user);
+		model.addAttribute("user", client);
 		
 		return "registrationSuccess";
 	}

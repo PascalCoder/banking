@@ -8,6 +8,7 @@ import java.util.List;
 //import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 //import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
@@ -37,11 +39,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 
-@Entity
 @JsonIgnoreProperties({"userId","password","bankAccounts","transactions","recipients","receivingAccounts"}) /*"address",*/
 @JsonPropertyOrder({"firstName","middleName","lastName","gender","DOB","email","phoneNumber","username"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User implements Serializable{
+@Entity
+//@Table(name="\"User\"") 
+/**User is a reserved keyword of postgres. 
+Therefore a Table for User will not be created unless the name "User" is escaped
+Changed the class name to Client (May 6 2018)*/
+public class Client implements Serializable{
 
 	/**
 	 * 
@@ -50,30 +56,37 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String userId;
+	@Column(name="CLIENT_ID")
+	private Integer clientId; /**Previously used String but postgres will not accept String for @Id (5/5/2018)*/
 	
 	@JsonProperty("first_name")
 	@NotEmpty
 	@Pattern(regexp="[^0-9]*")
+	@Column(name="FIRST_NAME")
 	private String firstName;
 	
 	@JsonProperty("middle_name")
 	@Valid
 	@Pattern(regexp="[^0-9]*")
+	@Column(name="MIDDLE_NAME")
 	private String middleName;
 	
 	@JsonProperty("last_name")
 	@NotEmpty
 	@Pattern(regexp="[^0-9]*")
+	@Column(name="LAST_NAME")
 	private String lastName;
 	
+	@Column
 	private String gender;
 	
 	@Valid
 	@OneToOne
+	//@Column(name="ADDRESS_ID")
 	private Address address;
 	
 	@Email
+	@Column
 	private String email;
 	
 	@JsonProperty("DOB")
@@ -81,22 +94,27 @@ public class User implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	//@NotNull
 	//@Temporal(TemporalType.DATE)
+	@Column(name="DATE_OF_BIRTH")
 	private java.time.LocalDate dateOfBirth;
 	
 	@JsonProperty("phone_number")
+	@Column(name="PHONE_NUMBER")
 	private String phoneNumber;
 	
 	/*@NotEmpty(message="Please provide a username.")*/
 	@Size(min=4, max=20)
+	@Column
 	private String username;
 	
 	/*@NotEmpty(message="Please enter a password.")*/
 	@Size(min=4, max=30)
+	@Column
 	private String password;
 	
 	@Transient
 	private String passwordConfirm;
 	
+	@Column
 	private boolean enabled;
 	
 	//@ElementCollection
@@ -112,27 +130,27 @@ public class User implements Serializable{
 	//@ElementCollection
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY) /*mappedBy="user", */
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<User> recipients;
+	private List<Client> recipients;
 	
 	//@ElementCollection
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY) /*mappedBy="user", */
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<BankAccount> receivingAccounts;
 	
-	public User(){}
+	public Client(){}
 	
-	public User(String username, String password) {
+	public Client(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
 	}
 
-	public String getUserId() {
-		return userId;
+	public Integer getClientId() {
+		return clientId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserId(Integer clientId) {
+		this.clientId = clientId;
 	}
 
 	public String getFirstName() {
@@ -250,14 +268,14 @@ public class User implements Serializable{
 	/**
 	 * @return the recipients
 	 */
-	public List<User> getRecipients() {
+	public List<Client> getRecipients() {
 		return recipients;
 	}
 
 	/**
 	 * @param recipients the recipients to set
 	 */
-	public void setRecipients(List<User> recipients) {
+	public void setRecipients(List<Client> recipients) {
 		this.recipients = recipients;
 	}
 

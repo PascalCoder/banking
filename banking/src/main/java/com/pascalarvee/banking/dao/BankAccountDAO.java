@@ -14,13 +14,13 @@ import com.pascalarvee.banking.domain.Transaction;
  */
 public interface BankAccountDAO {
 
-	void addBankAccount(String userId);
+	void addBankAccount(Integer clientId);
 	
 	void addTransaction(BankAccount bankAccount, Transaction transaction);
 	
-	LinkedList<BankAccount> getBankAccountsByUser(String userId);
+	LinkedList<BankAccount> getBankAccountsByClient(Integer clientId);
 	
-	void addTransactionRecipient(String userId, String accoountNumber);
+	void addTransactionRecipient(Integer clientId, String accoountNumber);
 	
 	BankAccount getBankAccountByAccountNumber(String accountNumber);
 }

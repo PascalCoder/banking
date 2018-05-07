@@ -16,7 +16,7 @@ import com.pascalarvee.banking.domain.BankAccount;
 import com.pascalarvee.banking.domain.Transaction;
 import com.pascalarvee.banking.domain.TransactionType;
 import com.pascalarvee.banking.domain.Transfer;
-import com.pascalarvee.banking.domain.User;
+import com.pascalarvee.banking.domain.Client;
 
 @Repository
 @Transactional
@@ -29,7 +29,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	public void addTransaction(Transaction transaction) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		User user = transaction.getUser();
+		Client client = transaction.getClient();
 		BankAccount bankAccount = transaction.getBankAccount();
 		TransactionType transactionType = transaction.getTransactionType();
 		transaction.setTransactionDate(LocalDateTime.parse((LocalDateTime.now()).toString().substring(0,19), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
@@ -46,9 +46,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 		
 		bankAccount.getTransactions().add(transaction);
 		
-		user.getBankAccounts().add(bankAccount); //Maybe we should remove the bankAccount with the same ID before adding this one
+		client.getBankAccounts().add(bankAccount); //Maybe we should remove the bankAccount with the same ID before adding this one
 		
-		session.saveOrUpdate(user);
+		session.saveOrUpdate(client);
 		session.saveOrUpdate(bankAccount);
 		session.saveOrUpdate(transaction);
 		
@@ -60,10 +60,10 @@ public class TransactionDAOImpl implements TransactionDAO {
 	public void addTransfer(Transfer transfer) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		User sender = transfer.getSender();
-		User receiver = transfer.getReceiver();
+		Client sender = transfer.getSender();
+		Client receiver = transfer.getReceiver();
 		
-		transfer.setUser(sender);
+		transfer.setClient(sender);
 		
 		BankAccount sendingAccount = transfer.getSendingAccount();
 		BankAccount receivingAccount = transfer.getReceivingAccount();
@@ -93,13 +93,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	@Override
-	public Set<Transaction> getTransactionsByUser(String userId) {
+	public Set<Transaction> getTransactionsByClient(Integer clientId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Transaction> getTransactionsByBankAccount(String accountId) {
+	public Set<Transaction> getTransactionsByBankAccount(Integer accountId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -111,13 +111,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	@Override
-	public Transaction getTransactionById(String transactionId) {
+	public Transaction getTransactionById(Integer transactionId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void cancelTransaction(String transactionId) {
+	public void cancelTransaction(Integer transactionId) {
 		// TODO Auto-generated method stub
 
 	}

@@ -30,12 +30,12 @@ public class DayOfTheWeekInterceptor extends HandlerInterceptorAdapter {
 		SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE");
 		String today = simpleDateformat.format(now);
 		
-		if(dayOfWeek == 6){
+		if(dayOfWeek == 8){
 			response.getWriter().write("The site is not available on " + today +"s." +  "\n"
 					+ "Please try accessing it on any other day of the week. \n"
 					+ "Thank you for your understanding! :)");
 			
-			return true;
+			return false;
 		}
 								
 		return true;

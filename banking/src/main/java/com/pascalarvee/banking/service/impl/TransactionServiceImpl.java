@@ -23,13 +23,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public Set<Transaction> getTransactionsByUser(String userId) {
+	public Set<Transaction> getTransactionsByClient(Integer clientId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Transaction> getTransactionsByBankAccount(String accountId) {
+	public Set<Transaction> getTransactionsByBankAccount(Integer accountId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,13 +41,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public Transaction getTransactionById(String transactionId) {
+	public Transaction getTransactionById(Integer transactionId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void cancelTransaction(String transactionId) {
+	public void cancelTransaction(Integer transactionId) {
 		// TODO Auto-generated method stub
 
 	}

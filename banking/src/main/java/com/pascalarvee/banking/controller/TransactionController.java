@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -23,10 +22,10 @@ import com.pascalarvee.banking.domain.BankAccount;
 import com.pascalarvee.banking.domain.Transaction;
 import com.pascalarvee.banking.domain.TransactionType;
 import com.pascalarvee.banking.domain.Transfer;
-import com.pascalarvee.banking.domain.User;
+import com.pascalarvee.banking.domain.Client;
 import com.pascalarvee.banking.service.BankAccountService;
 import com.pascalarvee.banking.service.TransactionService;
-import com.pascalarvee.banking.service.UserService;
+import com.pascalarvee.banking.service.ClientService;
 
 /**
  * @author PASCAL
@@ -38,7 +37,7 @@ import com.pascalarvee.banking.service.UserService;
 public class TransactionController {
 	
 	@Autowired
-	private UserService userService;
+	private ClientService clientService;
 	
 	@Autowired
 	private TransactionService transactionService;
@@ -46,7 +45,7 @@ public class TransactionController {
 	@Autowired
 	private BankAccountService bankAccountService;
 	
-	User user;
+	Client client;
 	BankAccount bankAccount;
 	Transfer transaction; 
 	
@@ -56,8 +55,8 @@ public class TransactionController {
 						  @PathVariable("userId")String userId, Model model,
 						  @RequestParam("accountType")String accountType){
 		
-		user = userService.getUserByID(userId);
-		model.addAttribute("user", user);
+		client = clientService.getClientByID(Integer.valueOf(userId));
+		model.addAttribute("user", client);
 		//transaction.setUser(user);
 		
 		if(transactionType.equals("deposit")){
@@ -66,7 +65,7 @@ public class TransactionController {
 			return "withdrawalForm";
 		}else{
 			LinkedList<BankAccount>bankAccounts =  new LinkedList<>();
-			LinkedList<BankAccount> temp = new LinkedList<>(user.getBankAccounts());
+			LinkedList<BankAccount> temp = new LinkedList<>(client.getBankAccounts());
 			
 			for(BankAccount ba : temp){
 				if(ba.getAccountType().equalsIgnoreCase("Checking")){
@@ -78,8 +77,8 @@ public class TransactionController {
 				}
 			}
 			
-			LinkedList<BankAccount> receivingAccounts = new LinkedList<>(user.getReceivingAccounts());
-			List<User>recipientsSet = user.getRecipients();
+			LinkedList<BankAccount> receivingAccounts = new LinkedList<>(client.getReceivingAccounts());
+			List<Client>recipientsSet = client.getRecipients();
 			/*LinkedList<User> recipients = new LinkedList<>(recipientsSet);*/
 			
 			Transfer transaction = new Transfer();
@@ -101,10 +100,10 @@ public class TransactionController {
 		
 		transaction.setTransactionType(TransactionType.DEPOSIT);
 		transaction.setAmount(new BigDecimal(amount));
-		transaction.setUser(user);
+		transaction.setClient(client);
 		
 		
-		List<BankAccount>bankAccounts = new ArrayList<>(user.getBankAccounts());
+		List<BankAccount>bankAccounts = new ArrayList<>(client.getBankAccounts());
 		
 		BankAccount bankAccount = new BankAccount();
 		for(BankAccount ba : bankAccounts){
@@ -128,10 +127,10 @@ public class TransactionController {
 		System.out.println("Inside withdraw: " + transaction.getTransactionType());
 		transaction.setTransactionType(TransactionType.WITHDRAWAL);
 		transaction.setAmount(new BigDecimal(amount));
-		transaction.setUser(user);
+		transaction.setClient(client);
 		
 		
-		List<BankAccount>bankAccounts = new ArrayList<>(user.getBankAccounts());
+		List<BankAccount>bankAccounts = new ArrayList<>(client.getBankAccounts());
 		
 		BankAccount bankAccount = new BankAccount();
 		for(BankAccount ba : bankAccounts){
@@ -157,10 +156,10 @@ public class TransactionController {
 		Transfer transaction = new Transfer();
 		
 		transaction.setAmount(new BigDecimal(amount));
-		transaction.setSender(user);
+		transaction.setSender(client);
 		transaction.setSendingAccount(bankAccountService.getBankAccountByAccountNumber(sendingAccoount));
 		transaction.setReceivingAccount(bankAccountService.getBankAccountByAccountNumber(receivingAccount));
-		transaction.setReceiver(transaction.getReceivingAccount().getUser());
+		transaction.setReceiver(transaction.getReceivingAccount().getClient());
 		
 		transactionService.addTransfer(transaction);
 		

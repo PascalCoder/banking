@@ -6,6 +6,7 @@ package com.pascalarvee.banking.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,30 +37,38 @@ public class Transaction implements Serializable{
 	
 	@Id
 	@GeneratedValue
-	private String transactionId;
+	@Column(name="TRANSACTION_ID")
+	private Integer transactionId;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name="T_TYPE")
 	private TransactionType transactionType;
 	
 	@ManyToOne
-	@JoinColumn(name="userId")
-	private User user;
+	@JoinColumn(name="CLIENT_ID")
+	//@Column(name="USER_ID")
+	private Client client;
 	
 	@ManyToOne
-	@JoinColumn(name="accountId")
+	@JoinColumn(name="ACCOUNT_ID")
+	//@Column(name="ACCOUNT_ID")
 	private BankAccount bankAccount;
 	
+	@Column
 	private BigDecimal amount;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@Column(name="TRANSACTION_DATE")
 	private java.time.LocalDateTime transactionDate;
+	
+	@Column
 	private String description;
 	
-	public String getTransactionId() {
+	public Integer getTransactionId() {
 		return transactionId;
 	}
 	
-	public void setTransactionId(String transactionId) {
+	public void setTransactionId(Integer transactionId) {
 		this.transactionId = transactionId;
 	}
 	
@@ -71,12 +80,12 @@ public class Transaction implements Serializable{
 		this.transactionType = transactionType;
 	}
 	
-	public User getUser() {
-		return user;
+	public Client getClient() {
+		return client;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 	
 	public BankAccount getBankAccount() {

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pascalarvee.banking.domain.User;
-import com.pascalarvee.banking.service.UserService;
+import com.pascalarvee.banking.domain.Client;
+import com.pascalarvee.banking.service.ClientService;
 
 /**
  * @author PASCAL
@@ -27,37 +27,37 @@ import com.pascalarvee.banking.service.UserService;
 public class RESTFullController {
 	
 	@Autowired
-	private UserService userService;
+	private ClientService clientService;
 	
 	//@ResponseBody
 	@RequestMapping(value="/users", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<User> getAllUsers(){
+	public ArrayList<Client> getAllClients(){
 		
-		ArrayList<User> users = new ArrayList<>(userService.getAllUsers());
+		ArrayList<Client> clients = new ArrayList<>(clientService.getAllClients());
 		
-		return users;
+		return clients;
 	}
 	
 	//@ResponseBody
 	@RequestMapping(value="/users/{firstName}", method=RequestMethod.GET)
-	public ArrayList<User> getUsersByFirstName(@PathVariable("firstName")String firstName){
-		ArrayList<User> users = (ArrayList<User>) userService.getUsersByFirstName(firstName);
+	public ArrayList<Client> getClientsByFirstName(@PathVariable("firstName")String firstName){
+		ArrayList<Client> clients = (ArrayList<Client>) clientService.getClientsByFirstName(firstName);
 		
-		return users;
+		return clients;
 	}
 
 	@ResponseBody
 	@RequestMapping(value="/users/byLastName/{lastName}", method=RequestMethod.GET) /**/
-	public ArrayList<User> getUsersByLastName(@PathVariable("lastName")String lastName){
-		ArrayList<User> users = (ArrayList<User>) userService.getUsersByLastName(lastName);
+	public ArrayList<Client> getClientsByLastName(@PathVariable("lastName")String lastName){
+		ArrayList<Client> clients = (ArrayList<Client>) clientService.getClientsByLastName(lastName);
 		
-		return users;
+		return clients;
 	}
 	
 	@RequestMapping(value="/user/updateInfo/{username}", method=RequestMethod.PUT)
-	public boolean updateUserInfo(@PathVariable("username")String username, @RequestBody User user){
+	public boolean updateClientInfo(@PathVariable("username")String username, @RequestBody Client client){
 		System.out.println("Username: " + username);
-		System.out.println("Username: " + user.getUsername());
+		System.out.println("Username: " + client.getUsername());
 		
 		return true;
 	}

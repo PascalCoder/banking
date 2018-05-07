@@ -20,13 +20,13 @@ public interface TransactionService {
 	
 	void addTransfer(Transfer transfer);
 	
-	Set<Transaction> getTransactionsByUser(String userId);
+	Set<Transaction> getTransactionsByClient(Integer clientId);
 	
-	Set<Transaction> getTransactionsByBankAccount(String accountId);
+	Set<Transaction> getTransactionsByBankAccount(Integer accountId);
 	
 	Set<Transaction> getTransactionsByDates(LocalDate startDate, LocalDate endDate);
 	
-	Transaction getTransactionById(String transactionId);
+	Transaction getTransactionById(Integer transactionId);
 	
-	void cancelTransaction(String transactionId);
+	void cancelTransaction(Integer transactionId);
 }

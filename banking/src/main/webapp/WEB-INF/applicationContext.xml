@@ -6,17 +6,22 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url" value="jdbc:h2:tcp://localhost/~/banking_test" /> <!-- jdbc:h2:~/webapp -->
+		<!--<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/banking_test" /> 
 		<property name="username" value="sa" />
-		<property name="password" value="" />
+		<property name="password" value="" />-->
+		
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://ec2-174-129-41-64.compute-1.amazonaws.com:5432/d5v1qh58hstr3r" /> <!-- ec2-54-163-246-193.compute-1.amazonaws.com -->
+		<property name="username" value="lvdwjqbropcvmv" />
+		<property name="password" value="2fd64d13159b40843ba11094b12ff901fe0a6b74668c68d47abd391ebff6263b" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> <!-- H2Dialect -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop><!-- update -->
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>

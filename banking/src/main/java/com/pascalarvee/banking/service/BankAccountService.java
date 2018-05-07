@@ -11,7 +11,7 @@ import com.pascalarvee.banking.domain.BankAccount;
  */
 public interface BankAccountService {
 
-	void addTransactionRecipient(String userId, String accoountNumber);
+	void addTransactionRecipient(Integer clientId, String accoountNumber);
 
 	BankAccount getBankAccountByAccountNumber(String accountNumber);
 }
