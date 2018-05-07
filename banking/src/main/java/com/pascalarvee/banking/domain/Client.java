@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
@@ -119,12 +118,12 @@ public class Client implements Serializable{
 	
 	//@ElementCollection
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="client", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<BankAccount> bankAccounts;
 	
 	//@ElementCollection
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="client", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Transaction> transactions;
 	
 	//@ElementCollection
