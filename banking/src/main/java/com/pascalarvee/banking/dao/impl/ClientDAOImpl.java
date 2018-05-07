@@ -49,20 +49,20 @@ public class ClientDAOImpl implements ClientDAO {
 	public Client getClientByCredentials(String username, String password) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from User where username=? and password=?");
+		Query query = session.createQuery("from Client where username=? and password=?");
 		
 		query.setString(0, username);
 		query.setString(1, password);
 		
-		/*List<User> users = getAllUsers();
+		/*List<Client> users = getAllUsers();
 		
-		User user = new User();
-		for(User u : users){
+		Client client = new Client();
+		for(Client u : users){
 			if(u.getUsername().equals(username) && u.getPassword().equals(password)){
-				user = u;
+				client = u;
 				break;
 			}
-			if(user == null){
+			if(client == null){
 				System.out.println("Please verify your credentials!");
 			}
 		} */
@@ -73,7 +73,7 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.pascalarvee.banking.dao.UserDAO#getUserByID(java.lang.String)
+	 * @see com.pascalarvee.banking.dao.UserDAO#getUserByID(java.lang.Integer)
 	 */
 	@Override
 	public Client getClientByID(Integer userId) {
@@ -103,18 +103,18 @@ public class ClientDAOImpl implements ClientDAO {
 	public List<Client> getAllClients() {
 		
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from User");
+		Query query = session.createQuery("from Client");
 		
 		@SuppressWarnings("unchecked")
 		List<Client> clients = query.list();
-		//List<User> users1 = query.getQueryString();
+		//List<Client> users1 = query.getQueryString();
 		
 		session.flush();
 		
 		if(clients.size() == 0){
 			clients = new ArrayList<>();
-			/**User 1**/
-			/*User user1 = new User();
+			/**Client 1**/
+			/*Client user1 = new Client();
 			user1.setUserId("1");
 			user1.setFirstName("Pascal");
 			user1.setMiddleName("Bouadi");
@@ -153,7 +153,7 @@ public class ClientDAOImpl implements ClientDAO {
 			//user1.setBankAccounts(banks1);
 			
 			
-			/**User 2**/
+			/**Client 2**/
 			Client user2 = new Client();
 			user2.setUserId(99);
 			user2.setFirstName("James");
@@ -192,7 +192,7 @@ public class ClientDAOImpl implements ClientDAO {
 			
 			//user2.setBankAccounts(banks2);
 			
-			//List<User> users = new ArrayList<>();
+			//List<Client> users = new ArrayList<>();
 			//users.add(user1);
 			clients.add(user2);
 		}
@@ -201,7 +201,7 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.pascalarvee.banking.dao.UserDAO#addUser(com.pascalarvee.banking.domain.User)
+	 * @see com.pascalarvee.banking.dao.UserDAO#addUser(com.pascalarvee.banking.domain.Client)
 	 */
 	@Override
 	public void addClient(Client client) {
@@ -218,7 +218,7 @@ public class ClientDAOImpl implements ClientDAO {
 		Set<BankAccount> bankAccounts = new HashSet<>();
 		bankAccounts.add(bankAccount);
 		client.setBankAccounts(new ArrayList<>(bankAccounts));
-		//user.getAddress().setUser(user);
+		//client.getAddress().setUser(client);
 		
 		session.saveOrUpdate(client);
 		session.saveOrUpdate(client.getAddress());
@@ -245,7 +245,7 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.pascalarvee.banking.dao.UserDAO#desactivateUser(com.pascalarvee.banking.domain.User)
+	 * @see com.pascalarvee.banking.dao.UserDAO#desactivateUser(com.pascalarvee.banking.domain.Client)
 	 */
 	@Override
 	public void desactivateClient(Integer userId) {
@@ -253,10 +253,10 @@ public class ClientDAOImpl implements ClientDAO {
 		Client client = (Client)session.get(Client.class, userId);
 		client.setEnabled(false);
 		
-		/*Set<BankAccount>bankAccounts = user.getBankAccounts();
-		Set<Transaction>transactions = user.getTransactions();
-		Set<User>recipients = user.getRecipients();
-		Set<BankAccount> receivingAccounts = user.getReceivingAccounts();
+		/*Set<BankAccount>bankAccounts = client.getBankAccounts();
+		Set<Transaction>transactions = client.getTransactions();
+		Set<Client>recipients = client.getRecipients();
+		Set<BankAccount> receivingAccounts = client.getReceivingAccounts();
 		
 		for(Transaction transaction : transactions){
 			session.delete(transaction);
@@ -267,13 +267,13 @@ public class ClientDAOImpl implements ClientDAO {
 		for(BankAccount bankAccount : receivingAccounts){
 			session.delete(bankAccount);
 		}
-		for(User user1 : recipients){
+		for(Client user1 : recipients){
 			session.delete(user1);
 		}*/
 		
-		//user.setBankAccounts(null);
+		//client.setBankAccounts(null);
 		
-		//session.delete(user);
+		//session.delete(client);
 		session.flush();
 
 	}
@@ -281,7 +281,7 @@ public class ClientDAOImpl implements ClientDAO {
 	@Override
 	public Client getClientByUsername(String username) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from User where username=?");
+		Query query = session.createQuery("from Client where username=?");
 		
 		query.setString(0, username);
 				
@@ -349,7 +349,7 @@ public class ClientDAOImpl implements ClientDAO {
 	public List<Client> getClientsByFirstName(String firstName) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from User where firstName=?");
+		Query query = session.createQuery("from Client where firstName=?");
 		query.setString(0, firstName);
 		
 		@SuppressWarnings("unchecked")
@@ -364,7 +364,7 @@ public class ClientDAOImpl implements ClientDAO {
 	public List<Client> getClientsByLastName(String lastName) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from User where lastName=?");
+		Query query = session.createQuery("from Client where lastName=?");
 		query.setString(0, lastName);
 		
 		@SuppressWarnings("unchecked")
