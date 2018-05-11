@@ -67,7 +67,7 @@ public class BankAccount implements Serializable {
 	//@Column(name="USER_ID")
 	private Client client;
 
-	@Column
+	@Column(name="BALANCE")
 	private BigDecimal balance;
 	
 	//@ElementCollection

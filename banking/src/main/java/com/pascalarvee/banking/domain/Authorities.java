@@ -21,10 +21,10 @@ public class Authorities {
 	@Column(name="AUTHORITIES_ID")
 	private Integer authoritiesId;
 	
-	@Column
+	@Column(name="USERNAME")
 	private String username;
 	
-	@Column
+	@Column(name="AUTHORITY")
 	private String authority;
 	
 	public Integer getAuthoritiesId() {

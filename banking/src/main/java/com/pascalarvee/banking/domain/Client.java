@@ -76,7 +76,7 @@ public class Client implements Serializable{
 	@Column(name="LAST_NAME")
 	private String lastName;
 	
-	@Column
+	@Column(name="GENDER")
 	private String gender;
 	
 	@Valid
@@ -85,7 +85,7 @@ public class Client implements Serializable{
 	private Address address;
 	
 	@Email
-	@Column
+	@Column(name="EMAIL")
 	private String email;
 	
 	@JsonProperty("DOB")
@@ -102,18 +102,18 @@ public class Client implements Serializable{
 	
 	/*@NotEmpty(message="Please provide a username.")*/
 	@Size(min=4, max=20)
-	@Column
+	@Column(name="USERNAME")
 	private String username;
 	
 	/*@NotEmpty(message="Please enter a password.")*/
 	@Size(min=4, max=30)
-	@Column
+	@Column(name="PASSWORD")
 	private String password;
 	
 	@Transient
 	private String passwordConfirm;
 	
-	@Column
+	@Column(name="ENABLED")
 	private boolean enabled;
 	
 	//@ElementCollection

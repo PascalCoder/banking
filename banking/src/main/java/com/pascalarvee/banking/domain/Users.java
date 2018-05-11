@@ -21,16 +21,16 @@ public class Users {
 	@Column(name="USERS_ID")
 	private Integer usersId;
 	
-	@Column
+	@Column(name="USERNAME")
 	private String username;
 	
-	@Column
+	@Column(name="PASSWORD")
 	private String password;
 	
 	@Column(name="CLIENT_ID")
 	private Integer clientId;
 	
-	@Column
+	@Column(name="ENABLED")
 	private boolean enabled;
 	
 	public Integer getUsersId() {

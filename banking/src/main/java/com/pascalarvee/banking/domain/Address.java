@@ -46,14 +46,14 @@ public class Address implements Serializable{
 	private String addressLine2;
 	
 	@NotEmpty
-	@Column
+	@Column(name="CITY")
 	private String city;
 	
-	@Column
+	@Column(name="STATE")
 	private String state;
 	
 	@NotEmpty
-	@Column
+	@Column(name="COUNTRY")
 	private String country;
 	
 	@JsonProperty("zip_code")

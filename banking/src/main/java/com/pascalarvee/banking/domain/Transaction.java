@@ -54,14 +54,14 @@ public class Transaction implements Serializable{
 	//@Column(name="ACCOUNT_ID")
 	private BankAccount bankAccount;
 	
-	@Column
+	@Column(name="AMOUNT")
 	private BigDecimal amount;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@Column(name="TRANSACTION_DATE")
 	private java.time.LocalDateTime transactionDate;
 	
-	@Column
+	@Column(name="DESCRIPTION")
 	private String description;
 	
 	public Integer getTransactionId() {
