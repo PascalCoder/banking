@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
- * @author PASCAL
+ * @author <a href="mailto:pascal.arvee@gmail.com">PASCAL ARVEE</a>
  *
  */
 

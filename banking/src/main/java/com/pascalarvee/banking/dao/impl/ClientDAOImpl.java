@@ -240,6 +240,10 @@ public class ClientDAOImpl implements ClientDAO {
 		session.saveOrUpdate(bankAccount);
 		session.saveOrUpdate(client);
 		
+		System.out.println("***************************************");
+		System.out.println("Client ID:" + client.getClientId() + "\t ********");
+		System.out.println("***************************************");
+		
 		session.flush();
 
 	}

@@ -127,12 +127,12 @@ public class Client implements Serializable{
 	private List<Transaction> transactions;
 	
 	//@ElementCollection
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY) /*mappedBy="user", */
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY) /*mappedBy="client", */
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Client> recipients;
 	
 	//@ElementCollection
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY) /*mappedBy="user", */
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY) /*mappedBy="client", */
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<BankAccount> receivingAccounts;
 	
