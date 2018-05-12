@@ -12,9 +12,9 @@
 		<property name="password" value="" />-->
 		
 		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://ec2-174-129-41-64.compute-1.amazonaws.com:5432/d5v1qh58hstr3r" /> <!-- ec2-54-163-246-193.compute-1.amazonaws.com -->
-		<property name="username" value="lvdwjqbropcvmv" />
-		<property name="password" value="2fd64d13159b40843ba11094b12ff901fe0a6b74668c68d47abd391ebff6263b" />
+		<property name="url" value="jdbc:postgresql://ec2-107-21-103-146.compute-1.amazonaws.com:5432/dduc8hobdn7rfs" /> <!-- ec2-54-163-246-193.compute-1.amazonaws.com -->
+		<property name="username" value="jhfeuiolmllbbf" />
+		<property name="password" value="a69fe94b052378f67d91ae0bb670516c654d46fe128ddbcfb8b790557bbc4a4a" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

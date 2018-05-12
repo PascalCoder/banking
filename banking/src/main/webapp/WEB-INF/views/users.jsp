@@ -17,8 +17,8 @@
 	<h3 class="lead">All the users with account(s) at this Bank</h3>
 	<c:forEach items="${users}" var="user">
 		<p>
-			${user.firstName} ${user.dateOfBirth} <a href="<c:url value='/admin/users/${user.userId}' />">More Info</a>
-			<a href="<c:url value='/admin/users/deleteUser/${user.userId}' />">Remove</a>
+			${user.firstName} ${user.dateOfBirth} <a href="<c:url value='/admin/users/${user.clientId}' />">More Info</a>
+			<a href="<c:url value='/admin/users/deleteUser/${user.clientId}' />">Remove</a>
 		</p>
 	</c:forEach>
 </body>

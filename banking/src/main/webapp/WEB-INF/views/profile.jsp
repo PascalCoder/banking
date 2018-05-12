@@ -88,7 +88,7 @@
 								</c:if>
 								<c:if test="${pageContext.request.userPrincipal.name != admin}">
 									<li><a>Welcome, ${user.firstName} ${user.lastName}</a></li>
-									<li><a href="<c:url value='/viewProfile/${user.userId}' />">Profile &amp; Settings</a></li>
+									<li><a href="<c:url value='/viewProfile/${user.clientId}' />">Profile &amp; Settings</a></li>
 								</c:if>
 								<li><a href="<c:url value='/j_spring_security_logout' />" >Logout</a></li>
 								<%-- <c:if test="${pageContext.request.userPrincipal.name != 'admin'}">
@@ -148,15 +148,15 @@
 									<hr>
 								</div>
 								<div>
-									<a href="<c:url value='/bankAccount/details/${user.userId}?accountType=checking' />" class="bankType">Banksys Checking</a>
+									<a href="<c:url value='/bankAccount/details/${user.clientId}?accountType=checking' />" class="bankType">Banksys Checking</a>
 									<span class="pull-right"><fmt:formatNumber value = "${balance}" type = "currency"/></span>
 									<p><a href="">Quick View</a></p>
 									<%-- ${bankAccounts[0].accountDescription} --%>
 								</div>
 								<div class="buttons">
-									<a href="<c:url value='/transaction/deposit/${user.userId}?accountType=checking' />" class="btn btn-primary btn-lg">Deposit</a>
-									<a href="<c:url value='/transaction/withdraw/${user.userId}?accountType=checking' />" class="btn btn-primary btn-lg">Withdraw</a>
-									<a href="<c:url value='/transaction/transfer/${user.userId}?accountType=checking' />" class="btn btn-primary btn-lg">Transfer</a>
+									<a href="<c:url value='/transaction/deposit/${user.clientId}?accountType=checking' />" class="btn btn-primary btn-lg">Deposit</a>
+									<a href="<c:url value='/transaction/withdraw/${user.clientId}?accountType=checking' />" class="btn btn-primary btn-lg">Withdraw</a>
+									<a href="<c:url value='/transaction/transfer/${user.clientId}?accountType=checking' />" class="btn btn-primary btn-lg">Transfer</a>
 								</div>
 								</div>
 							</div>

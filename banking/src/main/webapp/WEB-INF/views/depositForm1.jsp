@@ -68,7 +68,7 @@
 								</c:if>
 								<c:if test="${pageContext.request.userPrincipal.name != admin}">
 									<li><a>Welcome, ${user.firstName} ${user.lastName}</a></li>
-									<li><a href="<c:url value='/updateProfile/${user.userId}' />">Profile &amp; Settings</a></li>
+									<li><a href="<c:url value='/updateProfile/${user.clientId}' />">Profile &amp; Settings</a></li>
 								</c:if>
 								<li><a href="<c:url value='/j_spring_security_logout' />" >Logout</a></li>
 								<%-- <c:if test="${pageContext.request.userPrincipal.name != 'admin'}">

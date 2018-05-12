@@ -72,7 +72,7 @@
 								</c:if>
 								<c:if test="${pageContext.request.userPrincipal.name != admin}">
 									<li><a>Welcome, ${user.firstName} ${user.lastName}</a></li>
-									<li><a href="<c:url value='/updateProfile/${user.userId}' />">Profile &amp; Settings</a></li>
+									<li><a href="<c:url value='/updateProfile/${user.clientId}' />">Profile &amp; Settings</a></li>
 								</c:if>
 								<li><a href="<c:url value='/j_spring_security_logout' />" >Logout</a></li>
 								<%-- <c:if test="${pageContext.request.userPrincipal.name != 'admin'}">
@@ -161,7 +161,7 @@
 					</form:form>
 				</div>
 				<div class="col-md-3">
-					<a class="btn btn-info main-center" href="<c:url value='/addRecipient/${user.userId}/?accountType=checking'/>" style="text-align:center">Add Recepient</a>
+					<a class="btn btn-info main-center" href="<c:url value='/addRecipient/${user.clientId}/?accountType=checking'/>" style="text-align:center">Add Recepient</a>
 				</div>
 			</div>
 	</div>
